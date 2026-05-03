@@ -144,9 +144,7 @@ export function Hero() {
           <span className="size-1 rounded-full bg-muted-foreground/40" />
           <span>Linux</span>
           <span className="size-1 rounded-full bg-muted-foreground/40" />
-          <span className="opacity-60">Windows · soon</span>
-          <span className="size-1 rounded-full bg-muted-foreground/40" />
-          <span>MIT</span>
+          <span className="opacity-75">Windows - soon</span>
         </motion.div>
       </div>
     </section>

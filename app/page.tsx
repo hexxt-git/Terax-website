@@ -36,7 +36,7 @@ export default function HomePage() {
     softwareVersion: VERSION,
     downloadUrl: DOWNLOADS.macSilicon.url,
     url: SITE.url,
-    license: "https://opensource.org/licenses/MIT",
+    license: "https://opensource.org/licenses/Apache-2.0",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Organization", name: SITE.name, url: SITE.github },
   }

@@ -1,7 +1,7 @@
+import { GithubIcon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
 import Image from "next/image"
 import Link from "next/link"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { GithubIcon } from "@hugeicons/core-free-icons"
 
 import { SITE, VERSION } from "@/lib/site"
 
@@ -45,7 +45,7 @@ export function SiteFooter() {
             {SITE.tagline}
           </p>
           <p className="mt-6 font-mono text-xs text-muted-foreground/70">
-            v{VERSION} · MIT licensed
+            v{VERSION} · Preview
           </p>
         </div>
 
@@ -66,7 +66,11 @@ export function SiteFooter() {
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
           >
-            <HugeiconsIcon icon={GithubIcon} className="size-3.5" strokeWidth={2} />
+            <HugeiconsIcon
+              icon={GithubIcon}
+              className="size-3.5"
+              strokeWidth={2}
+            />
             crynta/terax-ai
           </Link>
         </div>

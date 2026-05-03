@@ -1,19 +1,158 @@
-import { Button } from "@/components/ui/button"
+import { SITE, VERSION, DOWNLOADS } from "@/lib/site"
+import { SiteHeader } from "@/components/site/header"
+import { Hero } from "@/components/site/hero"
+import { Stats } from "@/components/site/stats"
+import { FeatureShowcase } from "@/components/site/feature-showcase"
+import { FeatureGrid } from "@/components/site/feature-grid"
+import { Download } from "@/components/site/download"
+import { FAQ } from "@/components/site/faq"
+import { SiteFooter } from "@/components/site/footer"
 
-export default function Page() {
+import {
+  CommandLineIcon,
+  Layout02Icon,
+  Search01Icon,
+  PaintBrush02Icon,
+  CommandIcon,
+  CodeIcon,
+  RecordIcon,
+  Notebook01Icon,
+  CodeFolderIcon,
+  EnergyIcon,
+  BrowserIcon,
+  Mic01Icon,
+  CpuIcon,
+  CheckListIcon,
+} from "@hugeicons/core-free-icons"
+
+export default function HomePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: SITE.name,
+    description: SITE.description,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "macOS, Linux",
+    softwareVersion: VERSION,
+    downloadUrl: DOWNLOADS.macSilicon.url,
+    url: SITE.url,
+    license: "https://opensource.org/licenses/MIT",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    author: { "@type": "Organization", name: SITE.name, url: SITE.github },
+  }
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-foreground focus:px-3 focus:py-2 focus:text-background"
+      >
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main id="main" className="relative">
+        <Hero />
+        <Stats />
+
+        <div id="features" className="relative">
+          <FeatureShowcase
+            id="terminal"
+            index="01"
+            eyebrow="Terminal"
+            title="A terminal you'll actually want to live in."
+            description="xterm.js with a WebGL renderer, multi-tab, fastfetch, and a file explorer with Catppuccin icons. Keyboard-first, instantly fast."
+            bullets={[
+              { icon: CommandLineIcon, label: "WebGL-rendered xterm.js — silky at any scrollback" },
+              { icon: Layout02Icon, label: "Multi-tab terminals, editors, and previews side-by-side" },
+              { icon: CodeFolderIcon, label: "File explorer with Catppuccin icons + keyboard nav" },
+              { icon: Search01Icon, label: "Project-wide search at ripgrep speed" },
+            ]}
+            image={{
+              src: "/terminal.png",
+              alt: "Terax terminal showing fastfetch output and the file explorer",
+              width: 2560,
+              height: 1600,
+              caption: "~/projects/terax  ·  fastfetch",
+            }}
+            priority
+          />
+
+          <FeatureShowcase
+            id="editor"
+            index="02"
+            eyebrow="Editor"
+            title="An editor with real Vim mode and AI autocomplete."
+            description="Built-in editor with context-aware completions, first-class Vim, and prebuilt themes. No language-server setup — it just works."
+            bullets={[
+              { icon: CodeIcon, label: "Context-aware AI autocomplete" },
+              { icon: CommandIcon, label: "Real Vim mode (motions, registers, marks)" },
+              { icon: PaintBrush02Icon, label: "Catppuccin, Tokyo Night, and more" },
+              { icon: EnergyIcon, label: "Sub-millisecond keystroke latency" },
+            ]}
+            image={{
+              src: "/editor.png",
+              alt: "Terax code editor with AI autocomplete and Vim mode",
+              width: 2560,
+              height: 1600,
+              caption: "src/lib/site.ts",
+            }}
+            reverse
+          />
+
+          <FeatureShowcase
+            id="agents"
+            index="03"
+            eyebrow="AI workflow"
+            title="Agents that read, plan, and ship diffs."
+            description="Multi-agents and sub-agents browse files, run commands, and propose changes — every edit lands in a reviewable diff before it touches disk."
+            bullets={[
+              { icon: RecordIcon, label: "AI Edit Diffs — review every change inline" },
+              { icon: Notebook01Icon, label: "TERAX.md memory + per-project configs in your repo" },
+              { icon: CodeFolderIcon, label: "Snippets & skills — composable, callable workflows" },
+              { icon: CpuIcon, label: "BYOK or fully local via LM Studio" },
+              { icon: Mic01Icon, label: "Voice input — talk to your agents while you code" },
+            ]}
+            image={{
+              src: "/ai_workflow.png",
+              alt: "Terax AI panel showing an agent listing dirs and proposing edit diffs",
+              width: 2560,
+              height: 1600,
+              caption: "agents · edit diff",
+            }}
+          />
+
+          <FeatureShowcase
+            id="preview"
+            index="04"
+            eyebrow="Web preview"
+            title="Preview your app without leaving the shell."
+            description="Auto-detects dev servers — Vite, Next, anything — and opens them as a tab beside your editor."
+            bullets={[
+              { icon: BrowserIcon, label: "Auto-detect Vite, Next, Astro, and more" },
+              { icon: Layout02Icon, label: "Live preview tab next to your editor" },
+              { icon: CheckListIcon, label: "Plans, tasks, and TODOs tracked in-app" },
+              { icon: EnergyIcon, label: "Hot-reload at the speed of your dev server" },
+            ]}
+            image={{
+              src: "/web_preview.png",
+              alt: "Terax web preview showing a Vite app rendered in a side panel",
+              width: 2560,
+              height: 1600,
+              caption: "preview · http://localhost:5173",
+            }}
+            reverse
+          />
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+
+        <FeatureGrid />
+        <Download />
+        <FAQ />
+      </main>
+      <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+    </>
   )
 }

@@ -9,6 +9,143 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.6.6",
+    highlight: "Terminal renderer pool tuning and stability fixes.",
+    groups: [
+      {
+        kind: "Added",
+        items: [
+          "Workspace file picker in AI chat - type @ to insert a file reference.",
+        ],
+      },
+      {
+        kind: "Changed",
+        items: [
+          "RendererPool capacity bumped from K=4 to K=5 for smoother multi-tab terminals.",
+          "Fish shell support: more reliable startup and prompt rendering.",
+        ],
+      },
+      {
+        kind: "Fixed",
+        items: [
+          "TUI apps no longer freeze when a tab is hibernated and restored.",
+          "Tabs with unsaved edits are preserved when the underlying file is deleted on disk.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.6.5",
+    highlight: "Terminal performance pass (xterm.js WebGL + RendererPool).",
+    groups: [
+      {
+        kind: "Changed",
+        items: [
+          "Optimized the WebGL renderer pool - lower memory and steadier frame times across many tabs.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.6.4",
+    highlight:
+      "Security release - removes the OSC 8888 escape sequence handler (CVE pending).",
+    groups: [
+      {
+        kind: "Fixed",
+        items: [
+          "Critical: a remote SSH host (or any process writing to the PTY) could silently open arbitrary local files in the editor. The OSC 8888 handler has been removed entirely. Affected: >= 0.6.0, < 0.6.4. Reported responsibly by @eulex.",
+          "Settings model dropdowns are now scrollable on small windows.",
+          "Inactive terminal tabs no longer bleed across the split divider.",
+          "Explorer tree names and inline inputs clip cleanly inside the sidebar.",
+        ],
+      },
+      {
+        kind: "Added",
+        items: ["WSL workspaces are detected and supported on Windows."],
+      },
+    ],
+  },
+  {
+    version: "0.6.3",
+    highlight: "Editor languages, terminal preferences, and AI model picker.",
+    groups: [
+      {
+        kind: "Added",
+        items: [
+          "Editor language support: Go, C, C++, Java, C#.",
+          "Terminal: WebGL toggle and persistent font-size preferences.",
+          "Explorer: show-hidden-folders toggle.",
+          "AI: Gemini 2.5 Flash, Gemma 3 27B, and searchable model picker.",
+          "Styled confirm dialog for closing tabs with unsaved changes.",
+        ],
+      },
+      {
+        kind: "Fixed",
+        items: [
+          "Windows: main window title now set correctly.",
+          "Windows PTY: Tauri worker no longer blocks on close.",
+          "Terminal: UTF-8 locale forced for PowerShell sessions.",
+          "Terminal: respawn cleans up pending-exit and pty-opening state.",
+          "Explorer: rename/create inputs no longer blur when the context menu opens.",
+        ],
+      },
+      {
+        kind: "Changed",
+        items: [
+          "Search focus and keyboard handling refined for explorer and file search.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.6.1",
+    highlight: "Split terminals, preview tabs, DeepSeek.",
+    groups: [
+      {
+        kind: "Added",
+        items: [
+          "Split panes in the terminal.",
+          "Transient preview tabs with pinning behavior.",
+          "DeepSeek provider.",
+          "Customizable keyboard shortcuts in Settings.",
+          "Ctrl-Backspace deletes the previous word in the terminal.",
+        ],
+      },
+      {
+        kind: "Fixed",
+        items: [
+          "LM Studio and other keyless providers work in the model picker and chat send.",
+          "Settings window stays above the main app and broadcasts preference changes across windows.",
+          "AI mini-window no longer overshadows the input bar.",
+          "Explorer inline input survives the context menu open path.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.6.0",
+    highlight: "Windows builds, contributor docs, terax_open from the shell.",
+    groups: [
+      {
+        kind: "Added",
+        items: [
+          "First Windows release (NSIS installer).",
+          "terax_open shell command - open files into a Terax editor tab from any terminal.",
+          "Contributor docs and issue / PR templates.",
+        ],
+      },
+      {
+        kind: "Fixed",
+        items: [
+          "Explorer create / rename input no longer disappears before you can type.",
+          "TabBar padding and alignment.",
+          "Gemini model IDs updated to use the -preview suffix.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.5.9",
     date: "2026",
     highlight: "Linux adaptions and auto-updater fixes.",

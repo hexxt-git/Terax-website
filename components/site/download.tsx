@@ -22,6 +22,7 @@ interface BuildRow {
   file: string
   url?: string
   available: boolean
+  command?: string
 }
 
 interface PlatformBlock {
@@ -74,6 +75,13 @@ const platforms: PlatformBlock[] = [
         file: DOWNLOADS.linuxRpm.file,
         url: DOWNLOADS.linuxRpm.url,
         available: true,
+      },
+      {
+        arch: "AUR · Arch / Manjaro",
+        file: DOWNLOADS.linuxAur.file,
+        url: DOWNLOADS.linuxAur.url,
+        available: true,
+        command: "yay -S terax-bin",
       },
     ],
   },
@@ -210,7 +218,33 @@ export function Download() {
                           {b.file}
                         </div>
                       </div>
-                      {b.available && b.url ? (
+                      {b.command ? (
+                        <div className="flex items-center gap-2">
+                          <code className="rounded-full border border-border/60 bg-background/80 px-3 py-1.5 font-mono text-[12px] text-foreground/85">
+                            {b.command}
+                          </code>
+                          {b.url ? (
+                            <Button
+                              asChild
+                              size="sm"
+                              variant="ghost"
+                              className="rounded-full"
+                            >
+                              <Link
+                                href={b.url}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                AUR
+                                <HugeiconsIcon
+                                  icon={ArrowRight01Icon}
+                                  strokeWidth={2}
+                                />
+                              </Link>
+                            </Button>
+                          ) : null}
+                        </div>
+                      ) : b.available && b.url ? (
                         <Button
                           asChild
                           size="sm"

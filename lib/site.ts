@@ -10,6 +10,10 @@ export const SITE = {
   github: "https://github.com/crynta/terax-ai",
   githubReleases: "https://github.com/crynta/terax-ai/releases",
   issues: "https://github.com/crynta/terax-ai/issues",
+  aur: "https://aur.archlinux.org/packages/terax-bin",
+  demoVideoId: "kykgXa7sm1g",
+  demoVideoUrl: "https://youtu.be/kykgXa7sm1g",
+  youtube: "https://www.youtube.com/@crynta",
 } as const
 
 const releaseBase = `${SITE.githubReleases}/download/v${VERSION}`
@@ -48,6 +52,13 @@ export const DOWNLOADS = {
     file: `Terax-${VERSION}-1.x86_64.rpm`,
     arch: "Fedora / RHEL",
     url: `${releaseBase}/Terax-${VERSION}-1.x86_64.rpm`,
+    available: true,
+  },
+  linuxAur: {
+    label: "Linux · AUR",
+    file: "terax-bin",
+    arch: "Arch Linux / Manjaro",
+    url: "https://aur.archlinux.org/packages/terax-bin",
     available: true,
   },
   windows: {

@@ -4,7 +4,7 @@ const stats = [
   { value: "< 10MB", label: "App size" },
   { value: "~300ms", label: "Cold start" },
   { value: "No telemetry", label: "Ever" },
-  { value: "100%", label: "Open source" },
+  { value: "Apache-2.0", label: "Open source" },
 ]
 
 export function Stats() {

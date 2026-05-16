@@ -1,3 +1,4 @@
+import { Demo } from "@/components/site/demo"
 import { Download } from "@/components/site/download"
 import { FAQ } from "@/components/site/faq"
 import { FeatureGrid } from "@/components/site/feature-grid"
@@ -32,13 +33,22 @@ export default function HomePage() {
     name: SITE.name,
     description: SITE.description,
     applicationCategory: "DeveloperApplication",
-    operatingSystem: "macOS, Linux",
+    operatingSystem: "macOS, Linux, Windows",
     softwareVersion: VERSION,
     downloadUrl: DOWNLOADS.macSilicon.url,
     url: SITE.url,
     license: "https://opensource.org/licenses/Apache-2.0",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Organization", name: SITE.name, url: SITE.github },
+    video: {
+      "@type": "VideoObject",
+      name: `${SITE.name} - demo`,
+      description: `Quick walkthrough of ${SITE.name}: terminal, editor, AI agents, and web preview.`,
+      thumbnailUrl: `https://i.ytimg.com/vi/${SITE.demoVideoId}/maxresdefault.jpg`,
+      uploadDate: "2026-05-16",
+      contentUrl: SITE.demoVideoUrl,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${SITE.demoVideoId}`,
+    },
   }
 
   return (
@@ -47,6 +57,7 @@ export default function HomePage() {
       <main className="relative">
         <Hero />
         <Stats />
+        <Demo />
 
         <div id="features" className="relative">
           <FeatureShowcase
@@ -75,7 +86,7 @@ export default function HomePage() {
               },
             ]}
             image={{
-              src: "/terminal.png",
+              src: "/terminal.webp",
               alt: "Terax terminal showing fastfetch output and the file explorer",
               width: 2560,
               height: 1600,
@@ -103,7 +114,7 @@ export default function HomePage() {
               { icon: EnergyIcon, label: "Sub-millisecond keystroke latency" },
             ]}
             image={{
-              src: "/editor.png",
+              src: "/editor.webp",
               alt: "Terax code editor with AI autocomplete and Vim mode",
               width: 2560,
               height: 1600,
@@ -138,7 +149,7 @@ export default function HomePage() {
               },
             ]}
             image={{
-              src: "/ai_workflow.png",
+              src: "/ai_workflow.webp",
               alt: "Terax AI panel showing an agent listing dirs and proposing edit diffs",
               width: 2560,
               height: 1600,
@@ -171,7 +182,7 @@ export default function HomePage() {
               },
             ]}
             image={{
-              src: "/web_preview.png",
+              src: "/web_preview.webp",
               alt: "Terax web preview showing a Vite app rendered in a side panel",
               width: 2560,
               height: 1600,

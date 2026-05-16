@@ -54,7 +54,7 @@ export default function AboutPage() {
         <h2>Who builds it</h2>
         <p>
           Mostly me -{" "}
-          <Link href={SITE.github} target="_blank" rel="noreferrer">
+          <Link href={SITE.youtube} target="_blank" rel="noreferrer">
             crynta
           </Link>
           . Terax started as a side project because I wanted a faster terminal

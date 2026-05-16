@@ -24,7 +24,7 @@ export default function SecurityPage() {
           <>
             <span>Latest · v{VERSION}</span>
             <span className="size-1 rounded-full bg-muted-foreground/40" />
-            <span>Supported · 0.5.x</span>
+            <span>Supported · 0.6.x</span>
           </>
         }
       />
@@ -62,8 +62,20 @@ export default function SecurityPage() {
         <h2>Supported versions</h2>
         <p>
           Until <code>1.0.0</code>, only the latest minor receives security
-          fixes. Right now that&apos;s <code>0.5.x</code>.
+          fixes. Right now that&apos;s <code>0.6.x</code>.
         </p>
+
+        <h2>Past advisories</h2>
+        <ul>
+          <li>
+            <strong>OSC 8888 path traversal</strong> (fixed in{" "}
+            <code>0.6.4</code>) - a remote SSH host or any process writing to
+            the PTY could silently open arbitrary local files in the editor.
+            Affected <code>&gt;= 0.6.0</code>, <code>&lt; 0.6.4</code>.
+            Reported by <em>@eulex</em>. CWE-22, CWE-269. Update immediately if
+            you&apos;re on an affected version.
+          </li>
+        </ul>
 
         <h2>What&apos;s in scope</h2>
         <ul>
@@ -92,7 +104,7 @@ export default function SecurityPage() {
             attacker with shell access.
           </li>
           <li>
-            Older versions (<code>&lt; 0.5</code>).
+            Older versions (<code>&lt; 0.6</code>).
           </li>
         </ul>
 

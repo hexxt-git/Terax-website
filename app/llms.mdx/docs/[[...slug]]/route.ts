@@ -9,7 +9,11 @@ export async function GET(
   { params }: { params: Promise<{ slug?: string[] }> }
 ) {
   const { slug } = await params
-  const page = source.getPage(slug)
+  let cleanSlug = slug
+  if (cleanSlug && cleanSlug.length > 0 && cleanSlug[cleanSlug.length - 1] === "index") {
+    cleanSlug = cleanSlug.slice(0, -1)
+  }
+  const page = source.getPage(cleanSlug)
   if (!page) notFound()
 
   return new Response(await getLLMText(page), {

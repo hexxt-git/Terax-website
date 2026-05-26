@@ -1,11 +1,15 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import LineWaves from "../line-waves"
 
 export function BackgroundWaves() {
   const { resolvedTheme } = useTheme()
+  const pathname = usePathname()
   const isDark = resolvedTheme !== "light"
+
+  if (pathname?.startsWith("/docs")) return null
 
   return (
     <div

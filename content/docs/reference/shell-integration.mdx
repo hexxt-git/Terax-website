@@ -1,59 +1,72 @@
 ---
-title: Shell Integration
-description: Learn how to set up custom shell prompts, OSC 7 working directory syncing, and command tracking.
+title: Shell integration
+description: What Terax injects into your shell, the OSC sequences it watches, and how to opt out.
 icon: CommandLine
 ---
 
-Terax automatically configures your default system shell during spawn by injecting environment profiles. If you use a custom shell configuration or want to understand the exact escape sequences, this guide covers the integration details.
+Terax injects shell integration scripts automatically on every PTY spawn. You do not need to edit `.zshrc`, `.bashrc`, or `$PROFILE`. In fact, you should not - hand-rolling OSC emitters on top of the bundled ones will double-emit and confuse the cwd / prompt tracking.
 
-## OSC 7: Working Directory Syncing
+## What Terax injects
 
-OSC 7 sequences inform Terax of your shell's current working directory. This enables the sidebar file explorer to automatically follow your terminal navigation.
+Scripts live in `src-tauri/src/modules/pty/scripts/`.
 
-To emit OSC 7 manually on shell directory changes, print the directory URL using an escape sequence.
+### Zsh
 
-### Unix Shells (Zsh / Bash)
+`zshenv.zsh`, `zprofile.zsh`, `zlogin.zsh`, `zshrc.zsh` are installed via the `ZDOTDIR` environment variable. Your real `~/.zshrc` is sourced from inside Terax's script, so your config still runs. Terax adds:
 
-Add this hook function to your shell configuration (`~/.zshrc` or `~/.bashrc`):
+- `precmd` hook to emit `OSC 7` (cwd)
+- `precmd` / `preexec` hooks to emit `OSC 133 A` / `B` / `C`
+- `precmd` hook to emit `OSC 133 D;<code>` on the previous command's exit
 
-```bash
-# Print OSC 7 sequence on prompt draw
-update_terminal_cwd() {
-  printf "\033]7;file://%s%s\007" "$HOSTNAME" "$PWD"
-}
+### Bash
 
-# Add hook for prompt execution
-if [ -n "$ZSH_VERSION" ]; then
-  precmd_functions+=(update_terminal_cwd)
-elif [ -n "$BASH_VERSION" ]; then
-  PROMPT_COMMAND="update_terminal_cwd; $PROMPT_COMMAND"
-fi
-```
+`bashrc.bash` is installed via `--rcfile`. Your real `~/.bashrc` is sourced, plus the OSC 7 / OSC 133 hooks.
 
 ### PowerShell
 
-Add this wrapper to your `$PROFILE`:
+`profile.ps1` is passed via `pwsh -NoLogo -NoExit -ExecutionPolicy Bypass -File <path>`. Your real `$PROFILE` runs first, then Terax wraps the `prompt` function to emit `OSC 7 + OSC 133 A` / `B` / `D`.
 
-```powershell
-function prompt {
-    # Print OSC 7 path sequence
-    $cwd = $ExecutionContext.SessionState.Path.CurrentLocation.Path
-    Write-Host -NoNewline "$([char]27)]7;file://$env:COMPUTERNAME/$cwd$([char]7)"
+The cwd is normalized to backslashes before being passed to ConPTY because `CreateProcessW` misbehaves with forward-slash cwd on Windows.
 
-    # Return default prompt string
-    "PS $cwd> "
-}
+### cmd.exe
+
+No integration. `cmd.exe` is the last-resort fallback when neither `pwsh` nor `powershell` is available.
+
+## What the OSC sequences mean
+
+Terax watches three OSC families.
+
+### OSC 7 - working directory
+
+```
+ESC ] 7 ; file://<host><path> BEL
 ```
 
----
+Emitted by the shell every time the cwd changes. Drives the status bar breadcrumb and the explorer root.
 
-## OSC 133: Command Tracking
+On Windows, drive-letter normalization runs on the host side: `/C:/Users/foo` becomes `C:/Users/foo` before it is stored.
 
-OSC 133 sequences define command execution boundaries. This enables Terax's PTY reader to distinguish between the prompt, the command typed, the output generated, and the exit status.
+### OSC 133 - prompt and command boundaries
 
-- **OSC 133; A**: Marks the start of the prompt.
-- **OSC 133; B**: Marks the end of the prompt (the user input start).
-- **OSC 133; C**: Marks the start of command execution (output start).
-- **OSC 133; D; [code]**: Marks the completion of the command and returns the exit status code.
+| Marker | Meaning |
+| --- | --- |
+| `OSC 133;A` | Start of prompt |
+| `OSC 133;B` | End of prompt (user input start) |
+| `OSC 133;C;<cmd>` | Start of command output (arms terminal-agent detector) |
+| `OSC 133;D;<code>` | Command exited with `<code>` |
 
-Terax scans PTY streams for these codes to detect active coding agents and display context alerts in the sidebar dashboard.
+Used for: cwd tracking, command boundary detection, terminal-agent detection (see [Coding agents in the terminal](/docs/ai/terminal-agents)).
+
+### OSC 777 - agent state
+
+```
+ESC ] 777 ; notify ; Terax ; <event> BEL
+```
+
+A Terax-specific extension. Emitted by terminal agents (Claude Code hooks) to signal state transitions: `started`, `working`, `attention`, `finished`, `exited`. The PTY byte filter (`pty/agent_detect.rs`) self-arms on `OSC 133;C` and reads `OSC 777` payloads to drive the [notification router](/docs/features/notifications).
+
+## Opting out
+
+Right now shell integration is on for every PTY. If you have a strong reason to disable it (a debugging script that conflicts, a custom prompt framework that emits its own OSC 7), open an issue. There is no per-session opt-out switch in Settings today.
+
+If you maintain a prompt framework (Starship, oh-my-zsh, etc.), it should work as-is - Terax's hooks are additive, not destructive.

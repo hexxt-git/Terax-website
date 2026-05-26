@@ -1,36 +1,56 @@
 ---
-title: Editor Subsystem
-description: Details about the built-in CodeMirror 6 text editor, Vim mode, and syntax themes.
+title: Editor
+description: CodeMirror 6 with Vim mode, inline AI autocomplete, and hunk-by-hunk AI edit diffs.
 icon: Code
 ---
 
-Terax embeds a full-featured text editor directly into its workspace, eliminating the need to transition to external editors for quick changes or coding sessions.
+The editor is a full CodeMirror 6 stack mounted as one instance per tab. Like terminals, editor tabs are not unmounted on switch - cursor positions, undo history, and selections persist across the whole session.
 
-## Core Stack
+## Languages
 
-The editor is built on the CodeMirror 6 library. CodeMirror is configured as a React component stack (`EditorStack`) matching the active tab registry:
+CodeMirror language modes for TypeScript / JavaScript, Rust, Python, Go, C / C++, Java, HTML / CSS, JSON, Markdown, and the long tail of common formats. Mode is detected from the file extension.
 
-- **Background Execution**: Tabs are not unmounted when switched. Instead, they are hidden using CSS style rules. This allows file states, cursor positions, and undos to persist when you switch between tabs.
-- **Low Latency**: Key events are captured and executed directly within the frontend engine. This yields sub-millisecond latency for standard editing operations.
+## Vim mode
 
-## Vim Mode
+First-class. The `vim` CodeMirror extension - motions, registers, marks, visual modes, and `:` command line. Toggle in Settings -> General.
 
-Terax includes first-class support for Vim keyboard layouts. When enabled:
+## Inline AI autocomplete
 
-- The editor instantiates a custom Vim input handler.
-- All standard Vim motions, registers, marks, and visual selection modes are supported.
-- Command mode operations (like `:w`, `:q`, `:s`) execute their corresponding workspace commands.
+Type. After a short pause Terax queries your configured **autocomplete provider** and renders the suggestion inline. Accept with `Tab`, reject by typing anything else.
 
-To enable or disable Vim bindings, toggle the `vim_mode` setting inside your main configuration file.
+Provider and model are independent of your main chat model. Configure in Settings -> Models. The autocomplete provider can be any cloud provider or a local LM Studio / MLX / Ollama endpoint, since latency matters more than raw quality here.
 
-## Theme Engine and Syntax Styles
+Disable entirely with the `autocompleteEnabled` toggle.
 
-The editor's appearance is controlled by the central theme coordinator. Terax ships with several preconfigured syntax themes:
+## AI edit diffs
 
-- **Tokyo Night**
-- **Nord**
-- **Atom One**
-- **Xcode Dark**
-- **Gruvbox Dark**
+When the AI agent proposes a file edit, Terax does not write it directly. It opens an `ai-diff` tab showing the proposed change side by side with the current file. You accept or reject hunk by hunk, then the actual write tool runs against the accepted result.
 
-Themes write custom CSS variable trees to the page root, updating the editor theme automatically without component re-renders.
+This is the same mechanism whether the change came from the main agent, a sub-agent, or a custom agent.
+
+## Editor themes
+
+Ten bundled syntax themes, independent of the app theme:
+
+- Atom One
+- Aura
+- Copilot
+- GitHub Dark / Light
+- Gruvbox Dark
+- Nord
+- Tokyo Night
+- Xcode Dark / Light
+
+Pick one in Settings -> Themes. Editor theme picks separately from the app palette - dark editor on light app is fine.
+
+## Shortcuts
+
+| Action | Binding |
+| --- | --- |
+| Find in file | `Cmd+F` |
+| Undo | `Cmd+Z` |
+| Redo | `Cmd+Y` |
+| New editor tab | `Cmd+E` |
+| Toggle Vim mode | Settings -> General |
+
+CodeMirror's native key bindings handle the rest. Terax registers the editor entries in the shortcuts dialog for discoverability but does not intercept them at the app level.

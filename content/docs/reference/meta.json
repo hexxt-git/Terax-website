@@ -1,9 +1,11 @@
 {
-  "title": "Reference & Advanced",
+  "title": "Reference",
   "icon": "Notebook",
   "pages": [
-    "config",
     "shortcuts",
-    "shell-integration"
+    "settings",
+    "shell-integration",
+    "workspaces",
+    "data"
   ]
 }

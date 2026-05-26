@@ -1,26 +1,29 @@
 ---
-title: Terax Documentation
-description: Welcome to the Terax documentation. Learn how to configure and use Terax.
+title: Welcome
+description: Terax is a lightweight terminal-first AI-native dev workspace built on Tauri 2 and React 19.
 icon: BookOpen
 ---
 
-Welcome to the official documentation for **Terax**, the terminal-first AI-native developer workspace.
+Terax is an open-source desktop app that bundles a native terminal, code editor, file explorer, source control, web preview, and an agentic AI side-panel into a single ~7-8 MB window. Tauri 2 + Rust backend, React 19 frontend, xterm.js with WebGL, CodeMirror 6.
 
-Terax brings your terminal, text editor, AI agents, and live browser preview together into a single, cohesive, sub-millisecond environment.
+No telemetry. No account. BYOK for cloud models, fully local via LM Studio, MLX, or Ollama.
 
-### Getting Started
+## What's inside
 
-To get up and running, follow our quickstart guides:
+- **Terminal** with a native PTY backend (`portable-pty`), WebGL renderer, multi-tab, split panes, inline search.
+- **Editor** on CodeMirror 6 with Vim mode, inline AI autocomplete, and hunk-by-hunk AI edit diffs.
+- **File explorer** with Catppuccin icons, fuzzy search, keyboard nav, and attach-to-AI from selection.
+- **Source control** with hunk staging, a real commit graph, and inline diffs.
+- **Web preview** that auto-detects dev servers and opens them in a tab.
+- **AI Composer** with snippets, slash commands, voice input, named sessions, custom agents, and plan mode.
+- **Themes** with bundled presets, in-app custom themes, and a background image with opacity and blur.
 
-1. **[Getting Started with the Terminal](/docs/getting-started):** Learn basic keyboard shortcuts and pane controls.
-2. **[Customizing the Terminal](/docs/getting-started/customization):** Configure custom themes, fonts, and WebGL rendering.
+## Where to start
 
----
+1. [Install Terax](/docs/getting-started) and configure your first AI provider.
+2. Take a tour of [the workspace](/docs/getting-started/workspace).
+3. Browse [Features](/docs/features/terminal) to dive into any subsystem.
 
-### Core Philosophy
+## Where to look when something is missing
 
-Terax was built to solve the fragmentation of modern development tools. Instead of context switching between a terminal app, a text editor, an AI helper, and a web browser, Terax embeds all four into one unified window:
-
-- **Keyboard First:** Designed to be operated entirely from your keyboard with intuitive command shortcuts.
-- **Agentic Coding:** Run powerful AI agents that can read project structures and propose file changes in reviewable diffs before writing to disk.
-- **Zero Latency:** High-performance rendering pipeline using WebGL and Rust backend utilities.
+The full keyboard map lives in [Keyboard shortcuts](/docs/reference/shortcuts), and every preference is in [Settings](/docs/reference/settings). For where Terax stores your data on disk, see [Data locations](/docs/reference/data).

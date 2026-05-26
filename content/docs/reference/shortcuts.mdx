@@ -1,31 +1,74 @@
 ---
-title: Keyboard Shortcuts
-description: Reference table of default keyboard shortcuts inside Terax.
+title: Keyboard shortcuts
+description: The default key map. Every binding here is remappable in Settings - Shortcuts.
 icon: Keyboard
 ---
 
-Terax is designed to be keyboard-first. Most workspace actions can be triggered using shortcuts.
+Every default binding below is registered in `src/modules/shortcuts/shortcuts.ts` and remappable from **Settings -> Shortcuts**.
 
-## Global Navigation
+<img src="/settings_shortcuts.webp" alt="Settings Shortcuts" width="1200" />
 
-On macOS, use the `Cmd` key. On Linux and Windows, use the `Ctrl` key.
+`Mod` is `Cmd` on macOS, `Ctrl` on Linux and Windows. `Ctrl+Tab` and `Ctrl+Shift+Tab` use `Ctrl` on every platform.
 
-| Shortcut          | Command ID        | Action                                               |
-| :---------------- | :---------------- | :--------------------------------------------------- |
-| `Cmd + T`         | `tab.new`         | Open a new terminal tab                              |
-| `Cmd + W`         | `tab.close`       | Close the active workspace tab                       |
-| `Cmd + \`         | `sidebar.toggle`  | Toggle the sidebar panel (explorer / source control) |
-| `Cmd + J`         | `ai.toggle`       | Toggle the docked AI Composer bar                    |
-| `Cmd + P`         | `finder.files`    | Open the fuzzy file finder                           |
-| `Cmd + Shift + P` | `command.palette` | Open the workspace command palette                   |
+## General
 
-## Editor Shortcuts
+| Action | Default |
+| --- | --- |
+| Open settings | `Mod+,` |
+| Show keyboard shortcuts | `Mod+K` |
 
-These actions are active when an editor tab is focused.
+## Tabs
 
-| Shortcut  | Action                                          |
-| :-------- | :---------------------------------------------- |
-| `Cmd + F` | Open the inline search finder                   |
-| `Cmd + /` | Toggle comment on active lines                  |
-| `Tab`     | Accept AI autocomplete completion suggestion    |
-| `Esc`     | Clear active selection / exit visual mode (Vim) |
+| Action | Default |
+| --- | --- |
+| New terminal tab | `Mod+T` |
+| New private terminal | `Mod+R` |
+| New preview tab | `Mod+P` |
+| New editor tab | `Mod+E` |
+| Close tab or pane | `Mod+W` |
+| Next tab | `Ctrl+Tab` |
+| Previous tab | `Ctrl+Shift+Tab` |
+| Jump to tab 1 - 9 | `Mod+1` ... `Mod+9` |
+
+## Panes
+
+| Action | Default |
+| --- | --- |
+| Split pane right | `Mod+D` |
+| Split pane down | `Mod+Shift+D` |
+| Focus next pane | `Mod+]` |
+| Focus previous pane | `Mod+[` |
+| Toggle source panel | `Mod+G` |
+
+## View
+
+| Action | Default |
+| --- | --- |
+| Toggle file explorer | `Mod+B` |
+| Toggle file explorer focus | `Mod+Shift+E` |
+| Zoom in | `Mod+=` / `Mod+Shift++` |
+| Zoom out | `Mod+-` / `Mod+Shift+_` |
+| Reset zoom | `Mod+0` |
+
+## Search
+
+| Action | Default |
+| --- | --- |
+| Find in terminal | `Mod+F` |
+| Search files | `Mod+Shift+F` |
+
+## AI
+
+| Action | Default |
+| --- | --- |
+| Toggle AI agent | `Mod+I` |
+| Ask AI about selection | `Mod+L` |
+
+## Editor
+
+These are display-only entries. CodeMirror's `historyKeymap` owns them natively - Terax registers them in the shortcuts dialog for discoverability but does not intercept at the app level.
+
+| Action | Default |
+| --- | --- |
+| Undo | `Mod+Z` |
+| Redo | `Mod+Y` |

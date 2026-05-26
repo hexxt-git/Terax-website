@@ -1,11 +1,13 @@
 {
-  "title": "Core Workspace Features",
+  "title": "Features",
   "icon": "Layout",
   "pages": [
     "terminal",
     "editor",
     "explorer",
+    "source-control",
     "preview",
-    "git"
+    "themes",
+    "notifications"
   ]
 }

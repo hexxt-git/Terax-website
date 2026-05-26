@@ -1,19 +1,23 @@
 ---
-title: Live Web Preview
-description: Details about the auto-detecting localhost live web preview tab in Terax.
+title: Web preview
+description: Auto-detect localhost dev servers and external URLs in a preview tab.
 icon: Browser
 ---
 
-Terax contains an integrated web preview browser that runs alongside your terminal sessions.
+Terax watches PTY output for localhost URLs (`http://localhost:3000`, `127.0.0.1`, Vite, Next, etc.) and surfaces them as a status-bar pill suggesting **Open in preview**.
 
-## How It Works
+Click the pill to open a `preview` tab. Like every other tab kind, the preview is kept mounted in the background so the page state survives tab switches.
 
-The web preview bridges the gap between terminal script execution and browser verification:
+## Open manually
 
-- **Auto-Detection**: The PTY reader scans command outputs for server start markers (like `localhost:3000`, `127.0.0.1`, or `vite`).
-- **Status Bar Pill**: When a development server is detected, a status-bar pill appears indicating that a preview is available.
-- **Side-by-Side Tab**: Clicking the pill opens a preview tab. Like terminal and editor tabs, the preview is managed as an iframe that persists in the background when inactive.
+`Cmd+P` creates a new preview tab. Type or paste any URL.
 
-## Hot Reloading
+For external URLs Terax renders them in a native child webview rather than an iframe, so cross-origin headers and cookie scopes behave like a regular browser navigation.
 
-Because the preview mounts directly inside the Tauri webview context, it uses the host's WebSocket connections to handle hot module replacement (HMR) seamlessly. Any edit you save in the editor compiles and updates the preview immediately.
+## Hot reload
+
+The preview is mounted inside the Tauri webview, so it uses native WebSocket connections for HMR. Vite, Next, Astro, anything that ships an HMR runtime works without extra plumbing.
+
+## Detection sources
+
+URL detection runs against PTY output, not the user's terminal buffer state, so it works whether the dev server printed its URL once or repaints continuously.

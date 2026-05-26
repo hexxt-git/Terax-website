@@ -3,6 +3,6 @@
   "icon": "Play",
   "pages": [
     "index",
-    "customization"
+    "workspace"
   ]
 }

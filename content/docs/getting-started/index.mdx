@@ -1,45 +1,57 @@
 ---
-title: Getting Started with Terax
-description: Learn how to set up, open, and navigate the Terax terminal.
+title: Install and first run
+description: Install Terax on macOS, Linux, or Windows, then connect your first AI provider.
 icon: Rocket
 ---
 
-Welcome to **Terax**, the terminal-first AI-native developer workspace. Terax brings your terminal, text editor, AI agents, and live browser preview together into a single, cohesive, sub-millisecond environment.
+Terax ships as a signed desktop bundle. Download the installer for your platform from the [Releases](https://github.com/crynta/terax-ai/releases/latest) page. Terax auto-updates from there.
 
-## Installation & First Run
+## macOS
 
-After downloading and launching the application, you'll be greeted with a clean, hardware-accelerated command shell.
+Universal `.dmg` for Apple Silicon and Intel. Drag Terax to `/Applications` and launch.
 
-### Key Shortcuts
+## Linux
 
-To navigate the Terax workspace efficiently, use the built-in keyboard shortcuts:
+- **Arch / AUR:** `yay -S terax-bin` (or `paru`, etc.). Tracks the latest release.
+- **Debian / Ubuntu:** install the `.deb` from Releases. Depends on `libwebkit2gtk-4.1-0` and `libgtk-3-0`.
+- **Fedora / RHEL:** install the `.rpm`. Depends on `webkit2gtk4.1` and `gtk3`.
+- **AppImage:** needs FUSE. If FUSE is missing, run `./Terax_*.AppImage --appimage-extract-and-run`.
+- On Wayland with rendering glitches, set `WEBKIT_DISABLE_DMABUF_RENDERER=1`. The `.deb` / `.rpm` packages link against the system GTK stack and tend to be smoother than the AppImage.
 
-| Command   | Action                                    |
-| :-------- | :---------------------------------------- |
-| `Cmd + T` | Open a new terminal tab                   |
-| `Cmd + W` | Close the current tab                     |
-| `Cmd + \` | Toggle terminal sidebar (file explorer)   |
-| `Cmd + J` | Open the AI prompt input                  |
-| `Cmd + P` | Fuzzy search files in the current project |
+## Windows
 
----
+NSIS installer in `currentUser` mode (no admin required). WebView2 is bootstrapped offline.
 
-## Workspace Layout
+On first launch Windows may show "Windows protected your PC" because Terax is not code-signed yet. Click **More info** then **Run anyway**.
 
-Terax workspace consists of four main components designed to work side-by-side:
+Default shell detection on Windows: `pwsh.exe` (PowerShell 7+) -> `powershell.exe` (Windows PowerShell 5.1) -> `cmd.exe`. WSL distros are first-class workspaces, not a wrapped subprocess. See [Workspaces](/docs/reference/workspaces).
 
-1. **Terminal:** Silky smooth WebGL-rendered `xterm.js` instances.
-2. **Editor:** Vim-mode enabled text editor with context-aware AI completions.
-3. **AI Panel:** Agent workflows that can read files, propose diffs, and execute commands.
-4. **Browser Preview:** Automatic dev-server detection for hot-reloading your web projects.
+## Connect your first AI provider
+
+Terax is BYOK. Pick any supported provider and paste your key in Settings.
+
+1. Open **Settings -> Models** (`Cmd+,` then choose Models, or click the gear in the sidebar).
+2. Pick a provider (OpenAI, Anthropic, Google, Groq, xAI, Cerebras, OpenRouter, DeepSeek, Mistral, or any OpenAI-compatible endpoint).
+3. Paste your API key.
+
+<img src="/settings_models.webp" alt="Settings Models tab" width="1200" />
+
+Keys are written to the OS keychain via the `keyring` crate (service `terax-ai`). They never touch disk, `localStorage`, or the settings file.
+
+### Local and offline
+
+You can run entirely offline against LM Studio, MLX, or Ollama. Point Terax at the endpoint URL in Settings -> Models. No key required, just a model id at runtime.
+
+## Build from source
+
+Prerequisites: Rust (stable), Node 20+, [pnpm](https://pnpm.io), and the [Tauri prerequisites](https://tauri.app/start/prerequisites/) for your platform.
 
 ```bash
-# Verify your installation
-terax --version
+pnpm install
+pnpm tauri dev          # development
+pnpm tauri build        # production bundle
 ```
 
----
+## Next
 
-## Next Steps
-
-Now that you've got the basics down, head over to the [Customization](/docs/getting-started/customization) guide to personalize your terminal theme, layout, and AI configs!
+Tour the workspace in [Workspace layout](/docs/getting-started/workspace), or jump to any feature.

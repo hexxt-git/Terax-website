@@ -1,30 +1,33 @@
 ---
-title: File Explorer and Search
-description: Learn about the file browser, directory tree navigation, fuzzy finder, and global search inside Terax.
+title: File explorer
+description: Catppuccin icons, fuzzy file search, ripgrep content search, and attach-to-AI from selection.
 icon: CodeFolder
 ---
 
-Terax contains an integrated file explorer and a search subsystem designed for fast codebase navigation.
+The file explorer lives in the sidebar. Backed by Rust fs commands (`fs_read_dir`, `list_subdirs`) and indexed in background threads with the `ignore` crate, so `.gitignore` and `.ignore` are respected.
 
-## File Browser UI
+Toggle the sidebar with `Cmd+B`. Focus the explorer with `Cmd+Shift+E`.
 
-The sidebar displays a directory explorer tree populated using filesystem Tauri commands. Features include:
+## Tree
 
-- **Catppuccin File Icons**: Auto-resolves folder and file icons based on extensions and names.
-- **Keyboard Navigation**: Move through files, toggle folders, and open selections using arrow keys.
-- **Context Actions**: Create, delete, rename, or reveal items from the tree.
-- **Cross-Platform Separators**: Path inputs are normalized using separator-aware string splits. On Windows, backslashes are converted to forward slashes at the webview boundary to keep tree states consistent.
+- Catppuccin / Material icon theme via `iconResolver.ts`
+- Keyboard navigation - arrows to move, Enter to open, Right / Left to expand and collapse
+- Inline rename
+- Context actions: create file, create directory, rename, delete, reveal in OS
+- Show / hide dotfiles - Settings -> General, `Show hidden`
 
-## Fuzzy File Finder
+The explorer root follows the active tab's cwd. Canonical paths are forward-slash; on Windows the backend normalizes to forward slashes at the webview boundary so the tree state stays stable when OSC 7 fires.
 
-Pressing `Cmd + P` (or `Ctrl + P`) launches the fuzzy file finder.
+## Fuzzy file search
 
-- **Backend**: Rust runs file indexing using the `ignore` crate, which respects your `.gitignore` and `.ignore` rule sets.
-- **Performance**: Paths are indexed in Rust background threads and transmitted as arrays to keep search interactions fast.
+`Cmd+Shift+F` opens the file finder. Powered by `fs_search` in Rust. Searches all files the `ignore` crate would walk, ranked by fuzzy match. Open with Enter, dismiss with Esc.
 
-## Global Content Search (Grep)
+## Content search (grep)
 
-Global search runs full-text searches using ripgrep algorithms in Rust.
+The same finder switches to content mode for full-text search. Powered by `fs_grep` (the `grep-*` crates, ripgrep's engine). Accepts glob patterns to narrow targets. Results stream in grouped by file, with line numbers and match highlights.
 
-- **Filters**: Search queries accept glob patterns to filter targets.
-- **Stream Results**: Results stream into the search panel, grouping matches by file paths and highlight locations.
+## Attach to AI
+
+Right-click a file -> **Attach to AI** to add it to the [composer](/docs/ai/composer) as an attachment. Or select text in any tab and use `Cmd+L` (Ask AI about selection) to attach the selection as a `<selection source="...">` block on submit.
+
+Selections drain into chips on the composer rather than being pasted into the textarea, so the input stays readable.

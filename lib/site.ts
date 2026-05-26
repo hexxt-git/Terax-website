@@ -10,6 +10,7 @@ export const SITE = {
   github: "https://github.com/crynta/terax-ai",
   githubReleases: "https://github.com/crynta/terax-ai/releases",
   issues: "https://github.com/crynta/terax-ai/issues",
+  websiteRepo: "https://github.com/crynta/Terax-website",
   aur: "https://aur.archlinux.org/packages/terax-bin",
   demoVideoId: "kykgXa7sm1g",
   demoVideoUrl: "https://youtu.be/kykgXa7sm1g",

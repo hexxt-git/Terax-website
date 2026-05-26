@@ -6,6 +6,8 @@ icon: Terminal
 
 The terminal is the centerpiece of Terax. It is a real PTY, not a wrapped subprocess. Tabs survive in the background, split panes are first-class, and shell integration is injected automatically so the host always knows your cwd and command boundaries.
 
+<img src="/terminal.webp" alt="Terax terminal with multi-tab and file explorer" width="1200" />
+
 ## How it works
 
 Terax runs a two-process model. The Rust backend (`src-tauri`) owns every PTY through the `portable-pty` crate. The frontend never touches processes directly. PTY output streams from Rust into the React app over a Tauri `Channel<PtyEvent>` and lands in xterm.js, which renders to a WebGL canvas.

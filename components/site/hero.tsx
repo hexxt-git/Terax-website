@@ -135,6 +135,25 @@ export function Hero() {
           <span className="size-1 rounded-full bg-muted-foreground/40" />
           <span>Windows</span>
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-4 flex items-center gap-2 font-mono text-[11px] tracking-[0.08em] text-foreground/65 border rounded-xl bg-background/60 px-3 py-1"
+        >
+          <span>The site is open-source, too</span>
+          <span className="size-1 rounded-full bg-muted-foreground/40" />
+          <Link
+            href={SITE.websiteRepo}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground/85"
+          >
+            <HugeiconsIcon icon={GithubIcon} className="size-3" strokeWidth={2} />
+            <span>view source</span>
+          </Link>
+        </motion.div>
       </div>
     </section>
   )
